@@ -13,7 +13,7 @@ git clone https://github.com/Thalos12/Gal_plane_yso_counts.git
 
 This will put all the files in this repo in the folder `root/Gal_plane_yso_counts`.
 
-### 2. Getting the extinctionmap and the code for querying it.
+### 2. Getting the extinction map and the code for querying it.
 
 - Download the map file from [this link](http://www-personal.umd.umich.edu/~wiclarks/rubin/merged_ebv3d_nside64_defaults.fits.gz) 
  http://www-personal.umd.umich.edu/~wiclarks/rubin/merged_ebv3d_nside64_defaults.fits.gz provided by Will Clarkson (in datalab, you can use `wget` to get the file). Extract the map (you can use `gunzip`) and be sure to put it in the same folder as the notebook, that is in `root/Gal_plane_yso_counts`.
