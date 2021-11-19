@@ -1,5 +1,8 @@
 # Gal_plane_yso_counts
-This repository includes 2 notebooks to estimate the number of young stars with age t<10Myrs and mass M>0.3 Msun in the entire sky  (211116_yso_3D_90b.ipynb) and in the thin Galactic disk |b|<5 (211116_yso_3D_5b.ipynb). The three Opsim surveys, /sims_maf/fbs_2.0/baseline/baseline_v2.0_10yrs.db, /sims_maf/fbs_1.5/footprints/footprint_gp_smoothv1.5_10yrs.db and /sims_maf/fbs_1.5/footprints/footprint_gp_smoothv1.5_10yrs  are considered. The total counts are estimated assuming to observe only with gri filters  
+This repository includes the notebook to estimate the number of young stars with age t<10Myrs and mass M>0.3 Msun  (211116_yso_3D_90b.ipynb).
+Four Opsim surveys are considered. The total counts are estimated assuming to observe only with gri filters. We strongly recommend to adopt the Opsim
+/sims_maf/fbs_2.0/vary_gp/vary_gp_gpfrac1.00_v2.0_10yrs.db to homogeneously map the Galactic Plane. The number of stars detected is maximum even in regions
+with E(B-V)>0.2.  This is an important metric and we want to use the results to change our view of survey strategy
 
 ## How to use
 
