@@ -247,6 +247,9 @@ def example_run(dbFile):
     bg.runAll()
     bg.plotAll(closefigs=False)
 
+    for bl in bundleList:
+        print(runName, bl.metric.name, bl.summaryValues)
+
 
 def run_example_local():
     """Examples of running the metric with a local db file..
