@@ -21,24 +21,12 @@ from rubin_sim.maf.metrics.baseMetric import BaseMetric
 # from rubin_sim.photUtils import BandpassDict, Sed
 from rubin_sim.utils import _galacticFromEquatorial
 
-### The code below will be removed when the 3D extinction map is MAF-compatible
-# Check if 3D extinction repository exists locally, otherwise download
-ext3D_repo = "rubinCadenceScratchWIC"
-ext3D_repo = os.path.join(os.path.dirname(__file__), ext3D_repo)
-if not os.path.isdir(ext3D_repo):
-    print("Downloading repository.")
-    subprocess.call(["git", "clone", "https://github.com/willclarkson/rubinCadenceScratchWIC.git"])
-sys.path.append(os.path.join(ext3D_repo, "python"))
-import readExtinction
-# Download extinction map if necessary
-mapname = 'merged_ebv3d_nside64_defaults.fits.gz'
-pathMap = os.path.join(ext3D_repo,'extmaps', mapname)
-if not os.path.isfile(pathMap):
-    extmap_dir = os.path.dirname(pathMap)
-    print("Downloading extinction map to", extmap_dir)
-    subprocess.call(['wget', 'http://www-personal.umd.umich.edu/~wiclarks/rubin/{}'.format(mapname), '-P', extmap_dir])
-
 __all__ = ['NYoungStarsMetric']
+
+extmap3D_repo = os.path.join(os.path.dirname(__file__), "rubinCadenceScratchWIC")
+
+mapname = 'merged_ebv3d_nside64_defaults.fits.gz'
+pathMap = os.path.join(extmap3D_repo,'extmaps', mapname)
 
 # class Dust3D(object):
 #     """Calculate extinction values
@@ -74,6 +62,15 @@ __all__ = ['NYoungStarsMetric']
 #             # Calculate difference due to dust when EBV=1.0 (m_dust = m_nodust - Ax, Ax > 0)
 #             self.Ax1[filtername] = testsed.calcMag(bandpassDict[filtername]) - flatmag
 
+def download_repo_and_map():
+    ### The code below will be removed when the 3D extinction map is MAF-compatible
+    # Download 3D extinction repository
+    print("Downloading repository.")
+    subprocess.call(["git", "clone", "https://github.com/willclarkson/rubinCadenceScratchWIC.git"])
+    # Download extinction map
+    extmap_dir = os.path.dirname(pathMap)
+    print("Downloading extinction map to", extmap_dir)
+    subprocess.call(['wget', 'http://www-personal.umd.umich.edu/~wiclarks/rubin/{}'.format(mapname), '-P', extmap_dir])
 
 class star_density(object):
     """integrate from zero to some max distance, then multiply by angular area
@@ -164,6 +161,13 @@ class NYoungStarsMetric(BaseMetric):
         # dust_properties = Dust3D()
         # self.Ax1 = dust_properties.Ax1
         # Load extinction map
+
+        if not os.path.isdir(extmap3D_repo):
+            # The path to the 3D extinction map repository does not exist, need to get it
+            download_repo_and_map()
+        sys.path.append(os.path.join(extmap3D_repo, "python"))
+        import readExtinction
+
         self.ebv = readExtinction.ebv3d(pathMap)
         self.ebv.loadMap()
 
